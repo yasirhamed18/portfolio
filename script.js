@@ -14,7 +14,7 @@ themeToggle.addEventListener('click', () => {
     localStorage.setItem('theme', next);
 });
 
-function applyTheme(theme){
+function applyTheme(theme) {
     htmlEl.setAttribute('data-theme', theme);
     themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
 }
@@ -30,7 +30,7 @@ navToggle.addEventListener('click', () => {
 const navIndicator = document.getElementById('navIndicator');
 const navLinks = navMenu.querySelectorAll('a');
 
-function moveIndicatorTo(link){
+function moveIndicatorTo(link) {
     navIndicator.style.left = link.offsetLeft + 'px';
     navIndicator.style.width = link.offsetWidth + 'px';
     navIndicator.classList.add('show');
@@ -40,7 +40,7 @@ function moveIndicatorTo(link){
     navIndicator.classList.add('pop');
 }
 
-function createRipple(e, link){
+function createRipple(e, link) {
     const rect = link.getBoundingClientRect();
     const ripple = document.createElement('span');
     const size = Math.max(rect.width, rect.height);
@@ -68,7 +68,7 @@ navLinks.forEach(link => {
 });
 
 window.addEventListener('load', () => {
-    if (window.innerWidth > 768 && navLinks.length){
+    if (window.innerWidth > 768 && navLinks.length) {
         navLinks[0].classList.add('active');
         moveIndicatorTo(navLinks[0]);
     }
@@ -76,12 +76,13 @@ window.addEventListener('load', () => {
 
 window.addEventListener('resize', () => {
     const activeLink = navMenu.querySelector('a.active');
-    if (activeLink && window.innerWidth > 768){
+    if (activeLink && window.innerWidth > 768) {
         navIndicator.style.left = activeLink.offsetLeft + 'px';
         navIndicator.style.width = activeLink.offsetWidth + 'px';
     }
 });
 
+// Reveal on scroll
 const revealEls = document.querySelectorAll('.reveal');
 
 revealEls.forEach((el, i) => {
@@ -98,3 +99,120 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 
 revealEls.forEach(el => revealObserver.observe(el));
+
+// Stats counter animation
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number[data-target]');
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const duration = 2000;
+        const startTime = performance.now();
+
+        function update(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            counter.textContent = Math.floor(eased * target);
+
+            if (progress < 1) {
+                requestAnimationFrame(update);
+            } else {
+                counter.textContent = target;
+            }
+        }
+
+        requestAnimationFrame(update);
+    });
+}
+
+const statsSection = document.getElementById('stats');
+if (statsSection) {
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateCounters();
+                statsObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    statsObserver.observe(statsSection);
+}
+
+// Active nav link on scroll
+const sections = document.querySelectorAll('section[id]');
+
+window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY + 100;
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        const sectionId = section.getAttribute('id');
+
+        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + sectionId) {
+                    link.classList.add('active');
+                    if (window.innerWidth > 768) {
+                        moveIndicatorTo(link);
+                    }
+                }
+            });
+        }
+    });
+});
+
+// Contact form handling
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        if (!name || !email || !message) return;
+
+        const submitBtn = contactForm.querySelector('.btn-submit');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Sending...';
+        submitBtn.disabled = true;
+
+        setTimeout(() => {
+            const mailtoUrl = `mailto:hamiimalik84@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(name)}&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message)}`;
+            window.location.href = mailtoUrl;
+
+            submitBtn.textContent = 'Sent!';
+            contactForm.reset();
+
+            setTimeout(() => {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        }, 800);
+    });
+}
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+
+        const target = document.querySelector(targetId);
+        if (target) {
+            e.preventDefault();
+            const headerOffset = 70;
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
