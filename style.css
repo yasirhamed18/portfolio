@@ -16,7 +16,7 @@
 
 [data-theme="dark"] {
     --color-primary: #18040C;
-    --color-primary-light: #3C0C1B;
+    --color-primary-light: #1c0c3c;
     --color-accent: #FF5F9D;
     --color-accent-dark: #FF3D83;
     --color-heading: #FFE7F0;
@@ -145,6 +145,9 @@ nav h1 {
     font-weight: 800;
     letter-spacing: -0.5px;
     animation: blurIn 0.8s ease both;
+}
+.fa-solid{
+    color:gray;
 }
 
 nav ul {
@@ -332,7 +335,7 @@ nav a.active {
     position: relative;
     animation: blurSlideUp 0.9s ease both, floatY 5s ease-in-out 1.2s infinite;
     display: flex;
-    flex-direction: column;
+    flex-direction:column;
     align-items: center;
 }
 
@@ -341,9 +344,9 @@ nav a.active {
     position: absolute;
     inset: -12px;
     border-radius: 180px 180px 0 0;
-    border: 2px solid rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(224, 219, 219, 0.15);
     pointer-events: none;
-    opacity: 0.8;
+    opacity: 1.8;
 }
 
 .hero-copy > * {
@@ -375,8 +378,6 @@ nav a.active {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
     border-radius: 180px 180px 0 0;
     margin: 0 auto;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3), 0 0 80px rgba(255, 77, 141, 0.1);
-    border: 3px solid rgba(255, 255, 255, 0.2);
     transition: transform 0.4s cubic-bezier(.25, .8, .25, 1), filter 0.4s ease, box-shadow 0.4s ease;
 }
 
@@ -478,7 +479,7 @@ nav a.active {
     color: #fff;
     border-color: var(--color-accent);
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(214, 31, 60, 0.4);
+    box-shadow: 0 8px 25px rgba(27, 21, 22, 0.4);
 }
 
 .hero-actions a:active {
@@ -496,7 +497,7 @@ nav a.active {
 
 .btn-resume {
     background: var(--color-accent) !important;
-    border-color: var(--color-accent) !important;
+    border-color: var(--color-white) !important;
 }
 
 .btn-resume:hover {
