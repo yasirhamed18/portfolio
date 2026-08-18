@@ -34,34 +34,13 @@ function moveIndicatorTo(link) {
     navIndicator.style.left = link.offsetLeft + 'px';
     navIndicator.style.width = link.offsetWidth + 'px';
     navIndicator.classList.add('show');
-
-    navIndicator.classList.remove('pop');
-    void navIndicator.offsetWidth;
-    navIndicator.classList.add('pop');
-}
-
-function createRipple(e, link) {
-    const rect = link.getBoundingClientRect();
-    const ripple = document.createElement('span');
-    const size = Math.max(rect.width, rect.height);
-
-    ripple.className = 'ripple';
-    ripple.style.width = ripple.style.height = size + 'px';
-    ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
-    ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
-
-    link.appendChild(ripple);
-    ripple.addEventListener('animationend', () => ripple.remove());
 }
 
 navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
+    link.addEventListener('click', () => {
         navLinks.forEach(l => l.classList.remove('active'));
         link.classList.add('active');
-
         moveIndicatorTo(link);
-        createRipple(e, link);
-
         navMenu.classList.remove('open');
         navToggle.setAttribute('aria-expanded', 'false');
     });
@@ -82,7 +61,6 @@ window.addEventListener('resize', () => {
     }
 });
 
-// Reveal on scroll
 const revealEls = document.querySelectorAll('.reveal');
 
 revealEls.forEach((el, i) => {
@@ -100,7 +78,6 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 revealEls.forEach(el => revealObserver.observe(el));
 
-// Stats counter animation
 function animateCounters() {
     const counters = document.querySelectorAll('.stat-number[data-target]');
     counters.forEach(counter => {
@@ -139,7 +116,6 @@ if (statsSection) {
     statsObserver.observe(statsSection);
 }
 
-// Active nav link on scroll
 const sections = document.querySelectorAll('section[id]');
 
 window.addEventListener('scroll', () => {
@@ -164,7 +140,6 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Contact form handling
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', function (e) {
@@ -196,7 +171,6 @@ if (contactForm) {
     });
 }
 
-// Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const targetId = this.getAttribute('href');
