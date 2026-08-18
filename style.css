@@ -10,8 +10,6 @@
     --color-card-bg: rgba(255, 255, 255, 0.65);
     --color-card-border: rgba(74, 13, 32, 0.16);
     --shadow-color: rgba(74, 13, 32, 0.18);
-    --glass-bg: rgba(255, 255, 255, 0.08);
-    --glass-border: rgba(255, 255, 255, 0.15);
 }
 
 [data-theme="dark"] {
@@ -26,8 +24,6 @@
     --color-card-bg: rgba(34, 10, 20, 0.72);
     --color-card-border: rgba(255, 255, 255, 0.09);
     --shadow-color: rgba(0, 0, 0, 0.45);
-    --glass-bg: rgba(255, 255, 255, 0.04);
-    --glass-border: rgba(255, 255, 255, 0.08);
 }
 
 * {
@@ -48,23 +44,14 @@ html {
     }
 }
 
-@keyframes blurSlideUp {
+@keyframes fadeUp {
     from {
-        filter: blur(14px);
-        transform: translateY(24px);
+        opacity: 0;
+        transform: translateY(20px);
     }
     to {
-        filter: blur(0);
+        opacity: 1;
         transform: translateY(0);
-    }
-}
-
-@keyframes blurIn {
-    from {
-        filter: blur(10px);
-    }
-    to {
-        filter: blur(0);
     }
 }
 
@@ -87,14 +74,12 @@ html {
 }
 
 .reveal {
-    filter: blur(14px);
     opacity: 0;
-    transform: translateY(24px);
-    transition: filter 0.7s ease, opacity 0.7s ease, transform 0.7s ease;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .reveal.in-view {
-    filter: blur(0);
     opacity: 1;
     transform: translateY(0);
 }
@@ -119,7 +104,6 @@ img {
     display: block;
 }
 
-/* ==================== HEADER ==================== */
 header {
     background: var(--color-primary);
     padding: 16px 6%;
@@ -144,10 +128,10 @@ nav h1 {
     font-size: clamp(22px, 4vw, 30px);
     font-weight: 800;
     letter-spacing: -0.5px;
-    animation: blurIn 0.8s ease both;
 }
-.fa-solid{
-    color:rgb(199, 187, 187);
+
+.fa-solid {
+    color: rgb(199, 187, 187);
 }
 
 nav ul {
@@ -165,14 +149,12 @@ nav ul {
     height: 100%;
     border-radius: 30px;
     background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.25);
     box-shadow: 0 0 20px rgba(255, 77, 141, 0.4);
     opacity: 0;
     transform: scale(0.85);
-    transition: left 0.4s cubic-bezier(.25, .8, .25, 1),
-        width 0.4s cubic-bezier(.25, .8, .25, 1),
+    transition: left 0.35s ease,
+        width 0.35s ease,
         opacity 0.3s ease,
         transform 0.3s ease;
     pointer-events: none;
@@ -184,29 +166,13 @@ nav ul {
     transform: scale(1);
 }
 
-.nav-indicator.pop {
-    animation: indicatorPop 0.45s ease;
-}
-
-@keyframes indicatorPop {
-    0% {
-        transform: scale(1);
-    }
-    40% {
-        transform: scale(1.08);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
 nav a {
     color: #fff;
     text-decoration: none;
     padding: 8px 16px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 30px;
-    transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
     white-space: nowrap;
     display: inline-block;
     position: relative;
@@ -227,23 +193,6 @@ nav a:hover {
 nav a.active {
     border-color: transparent;
     color: #fff;
-}
-
-.ripple {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.55);
-    transform: scale(0);
-    animation: rippleAnim 0.6s ease-out;
-    pointer-events: none;
-    z-index: 0;
-}
-
-@keyframes rippleAnim {
-    to {
-        transform: scale(3.5);
-        opacity: 0;
-    }
 }
 
 .theme-toggle {
@@ -288,7 +237,6 @@ nav a.active {
     transition: 0.3s;
 }
 
-/* ==================== HERO ==================== */
 .hero-section {
     background: linear-gradient(135deg, rgba(74, 13, 32, 0.98), rgba(110, 21, 50, 0.94));
     min-height: 90vh;
@@ -327,57 +275,13 @@ nav a.active {
     pointer-events: none;
 }
 
-.hero-bubble {
-    position: absolute;
-    z-index: 0;
-    border-radius: 50%;
-    pointer-events: none;
-    filter: blur(2px);
-    opacity: 0.65;
-    animation: bubbleDrift 10s ease-in-out infinite alternate;
-}
-
-.hero-bubble-one {
-    width: 110px;
-    height: 110px;
-    top: 18%;
-    left: 8%;
-    background: rgba(255, 181, 213, 0.32);
-    box-shadow: 0 0 35px 12px rgba(255, 104, 162, 0.24);
-}
-
-.hero-bubble-two {
-    width: 62px;
-    height: 62px;
-    right: 12%;
-    bottom: 22%;
-    background: rgba(255, 221, 237, 0.38);
-    box-shadow: 0 0 28px 10px rgba(255, 131, 181, 0.28);
-    animation-delay: -4s;
-}
-
-.hero-bubble-three {
-    width: 42px;
-    height: 42px;
-    top: 32%;
-    right: 35%;
-    background: rgba(255, 114, 169, 0.44);
-    box-shadow: 0 0 24px 8px rgba(255, 77, 141, 0.32);
-    animation-delay: -7s;
-}
-
-@keyframes bubbleDrift {
-    from { transform: translate3d(0, 0, 0) scale(1); }
-    to { transform: translate3d(20px, -28px, 0) scale(1.12); }
-}
-
 #home > div {
     flex: 1 1 300px;
 }
 
 .hero-image-wrap {
     position: relative;
-    animation: blurSlideUp 0.9s ease both, floatY 5s ease-in-out 1.2s infinite;
+    animation: fadeUp 0.8s ease both, floatY 5s ease-in-out 1.2s infinite;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -389,9 +293,8 @@ nav a.active {
     aspect-ratio: 1;
     border-radius: 50%;
     overflow: hidden;
-    isolation: isolate;
     box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.08), 0 0 30px rgba(255, 77, 141, 0.55), 0 0 75px rgba(255, 77, 141, 0.35);
-    transition: box-shadow 0.1s ease;
+    transition: box-shadow 0.3s ease;
 }
 
 .hero-image-frame::after {
@@ -401,27 +304,26 @@ nav a.active {
     border-radius: inherit;
     border: 2px solid rgba(255, 216, 232, 0.75);
     pointer-events: none;
-    opacity: 1;
 }
 
 .hero-copy > * {
-    animation: blurSlideUp 0.8s ease both;
+    animation: fadeUp 0.7s ease both;
 }
 
 .hero-copy > *:nth-child(1) {
-    animation-delay: 0.15s;
+    animation-delay: 0.1s;
 }
 
 .hero-copy > *:nth-child(2) {
-    animation-delay: 0.3s;
+    animation-delay: 0.2s;
 }
 
 .hero-copy > *:nth-child(3) {
-    animation-delay: 0.45s;
+    animation-delay: 0.3s;
 }
 
 .hero-copy > *:nth-child(4) {
-    animation-delay: 0.6s;
+    animation-delay: 0.4s;
 }
 
 #home .hero-image-frame img {
@@ -431,13 +333,12 @@ nav a.active {
     object-position: center top;
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
     border-radius: 50%;
-    transition: transform 0.4s cubic-bezier(.25, .8, .25, 1), filter 0.4s ease, box-shadow 0.4s ease;
+    transition: transform 0.4s ease, filter 0.4s ease;
 }
 
 .hero-image-wrap:hover .hero-image-frame img {
     transform: translateY(-6px) scale(1.02);
     filter: saturate(1.08);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35), 0 0 100px rgba(255, 77, 141, 0.15);
 }
 
 .hero-image-wrap:hover .hero-image-frame {
@@ -454,7 +355,6 @@ nav a.active {
     background: rgba(255, 255, 255, 0.1);
     color: #f8fbff;
     border: 1px solid rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
     font-size: 12px;
     font-weight: 500;
     box-shadow: 0 0 20px rgba(255, 77, 141, 0.3);
@@ -518,15 +418,14 @@ nav a.active {
     border-radius: 40px;
     color: #fff;
     text-decoration: none;
-    transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+    transition: all 0.3s ease;
     font-weight: 600;
     font-size: 14px;
     background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(5px);
 }
 
 .hero-actions a::after {
-    content: "→";
+    content: "\2192";
     display: inline-block;
     transition: 0.3s ease;
 }
@@ -566,7 +465,6 @@ nav a.active {
     content: "" !important;
 }
 
-/* ==================== SECTIONS GENERAL ==================== */
 section {
     padding: 100px 8%;
 }
@@ -593,7 +491,6 @@ section h2 {
     letter-spacing: -0.5px;
 }
 
-/* ==================== ABOUT ==================== */
 #about {
     background: var(--color-bg);
 }
@@ -608,11 +505,10 @@ section h2 {
     position: relative;
     overflow: hidden;
     background: var(--color-card-bg);
-    backdrop-filter: blur(10px);
     padding: 32px;
     border-radius: 18px;
     border: 1px solid var(--color-card-border);
-    transition: transform 0.35s cubic-bezier(.25, .8, .25, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .about-card:hover {
@@ -632,6 +528,7 @@ section h2 {
     margin-bottom: 18px;
     color: #fff;
     box-shadow: 0 8px 20px rgba(255, 77, 141, 0.25);
+    font-size: 22px;
 }
 
 .about-card h3 {
@@ -647,7 +544,6 @@ section h2 {
     font-size: 14px;
 }
 
-/* ==================== SKILLS ==================== */
 #skills {
     background: linear-gradient(135deg, rgba(74, 13, 32, 0.97), rgba(110, 21, 50, 0.95));
     position: relative;
@@ -658,7 +554,7 @@ section h2 {
     content: "";
     position: absolute;
     inset: 0;
-    background: 
+    background:
         radial-gradient(circle at 20% 50%, rgba(255, 77, 141, 0.08) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(255, 118, 173, 0.06) 0%, transparent 50%);
     pointer-events: none;
@@ -671,10 +567,6 @@ section h2 {
 
 #skills h2 {
     color: #fff;
-}
-
-#skills .section-tag {
-    color: var(--color-accent);
 }
 
 .skill-category {
@@ -707,12 +599,10 @@ section h2 {
     position: relative;
     overflow: hidden;
     background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     padding: 24px 18px;
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: transform 0.35s cubic-bezier(.25, .8, .25, 1), box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+    transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -735,6 +625,7 @@ section h2 {
     justify-content: center;
     color: var(--color-accent);
     transition: transform 0.3s ease, color 0.3s ease;
+    font-size: 28px;
 }
 
 .skill-card:hover .skill-icon {
@@ -749,7 +640,6 @@ section h2 {
     letter-spacing: 0.3px;
 }
 
-/* ==================== STATS ==================== */
 .stats-section {
     background: linear-gradient(135deg, rgba(74, 13, 32, 0.06), rgba(255, 77, 141, 0.06));
     padding: 80px 8%;
@@ -771,7 +661,6 @@ section h2 {
     text-align: center;
     padding: 32px 16px;
     background: var(--color-card-bg);
-    backdrop-filter: blur(10px);
     border-radius: 18px;
     border: 1px solid var(--color-card-border);
     transition: transform 0.35s ease, box-shadow 0.35s ease;
@@ -806,7 +695,6 @@ section h2 {
     letter-spacing: 0.3px;
 }
 
-/* ==================== PROJECTS ==================== */
 #projects {
     background: linear-gradient(135deg, #0f0510, #1a0a14);
     color: #f1c5d9;
@@ -832,10 +720,9 @@ section h2 {
     position: relative;
     overflow: hidden;
     background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(10px);
     border-radius: 18px;
     border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: transform 0.4s cubic-bezier(.25, .8, .25, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
 .project-card:hover {
@@ -856,7 +743,7 @@ section h2 {
     object-fit: contain;
     object-position: center;
     background: #120812;
-    transition: transform 0.5s cubic-bezier(.25, .8, .25, 1), filter 0.5s ease;
+    transition: transform 0.5s ease, filter 0.5s ease;
 }
 
 .project-card:hover .project-image img {
@@ -871,7 +758,6 @@ section h2 {
     align-items: center;
     justify-content: center;
     background: rgba(74, 13, 32, 0.6);
-    backdrop-filter: blur(4px);
     opacity: 0;
     transition: opacity 0.4s ease;
 }
@@ -919,21 +805,6 @@ section h2 {
     padding: 24px;
 }
 
-.project-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 12px;
-    padding: 5px 12px;
-    border-radius: 999px;
-    background: rgba(255, 77, 141, 0.12);
-    color: var(--color-accent);
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
 .project-info h3 {
     color: #ffe7f0;
     font-size: 18px;
@@ -948,22 +819,6 @@ section h2 {
     margin-bottom: 14px;
 }
 
-.project-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-}
-
-.project-tags span {
-    padding: 4px 10px;
-    border-radius: 999px;
-    background: rgba(255, 77, 141, 0.1);
-    color: var(--color-accent);
-    font-size: 11px;
-    font-weight: 600;
-}
-
-/* ==================== CONTACT ==================== */
 #contact {
     background: linear-gradient(135deg, rgba(74, 13, 32, 0.97), rgba(110, 21, 50, 0.95));
     position: relative;
@@ -1042,6 +897,7 @@ section h2 {
     justify-content: center;
     flex-shrink: 0;
     color: #fff;
+    font-size: 18px;
 }
 
 .email-icon {
@@ -1079,8 +935,6 @@ section h2 {
 
 .contact-form-wrap {
     background: rgba(255, 255, 255, 0.06);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 32px;
@@ -1140,7 +994,6 @@ section h2 {
     box-shadow: 0 8px 25px rgba(214, 31, 60, 0.4);
 }
 
-/* ==================== FOOTER ==================== */
 footer {
     background: var(--color-primary);
     color: #fff;
@@ -1155,7 +1008,6 @@ footer p {
     font-size: 13px;
 }
 
-/* ==================== RESPONSIVE ==================== */
 @media (max-width: 1024px) {
     .hero-section {
         padding: 60px 6%;
