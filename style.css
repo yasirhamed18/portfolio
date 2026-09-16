@@ -345,20 +345,6 @@ nav a.active {
     box-shadow: 0 0 0 7px rgba(255, 255, 255, 0.14), 0 0 42px rgba(255, 77, 141, 0.8), 0 0 105px rgba(255, 77, 141, 0.5);
 }
 
-.availability-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin: 18px auto 0;
-    padding: 8px 16px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #f8fbff;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    font-size: 12px;
-    font-weight: 500;
-    box-shadow: 0 0 20px rgba(255, 77, 141, 0.3);
-}
 
 .pulse-dot {
     width: 8px;
